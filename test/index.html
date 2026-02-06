@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Nivel | NQN English Institute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --secondary: #1a2d4a;
+            --accent: #c9a227;
+            --accent-light: #e8d48a;
+            --light: #f8f9fa;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'DM Sans', system-ui, sans-serif;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--primary);
+            line-height: 1.6;
+            background: var(--white);
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--serif);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.75rem 1.75rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mobile-menu-links li {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active .mobile-menu-links li {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu.active .mobile-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-menu-links a {
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--accent);
+        }
+
+        .mobile-menu-cta {
+            margin-top: 2.5rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.35s;
+        }
+
+        .mobile-menu.active .mobile-menu-cta {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu-cta a {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            font-family: var(--sans);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 5% 5rem;
+            background: var(--primary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(201, 162, 39, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 5% 0;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            background: var(--white);
+            padding-bottom: 1.5rem;
+        }
+
+        .progress-bar-wrapper {
+            background: var(--gray-light);
+            height: 6px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .progress-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .progress-label.active {
+            color: var(--accent);
+        }
+
+        .progress-label.completed {
+            color: var(--success);
+        }
+
+        /* Test Container */
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 5% 6rem;
+        }
+
+        /* Section */
+        .test-section {
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-tag.basic { background: #3b82f6; }
+        .section-tag.beginner { background: #6366f1; }
+        .section-tag.elementary { background: #8b5cf6; }
+        .section-tag.preint { background: #a855f7; }
+        .section-tag.reading { background: #0d9488; }
+        .section-tag.writing { background: #c9a227; }
+
+        .test-section h2 {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-objective {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        /* Question */
+        .question {
+            margin-bottom: 2.5rem;
+        }
+
+        .question-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: all 0.25s;
+            background: var(--white);
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background: rgba(201, 162, 39, 0.03);
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background: rgba(201, 162, 39, 0.06);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gray-light);
+            border-radius: 50%;
+            margin-right: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-radio {
+            border-color: var(--accent);
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        /* Reading Passage */
+        .reading-passage {
+            background: var(--light);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .reading-passage p {
+            font-size: 0.95rem;
+            color: var(--primary);
+            line-height: 1.8;
+        }
+
+        .reading-passage .passage-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        /* Writing Section */
+        .writing-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .writing-option {
+            padding: 1.5rem;
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: all 0.25s;
+            background: var(--white);
+        }
+
+        .writing-option:hover {
+            border-color: var(--accent);
+        }
+
+        .writing-option.selected {
+            border-color: var(--accent);
+            background: rgba(201, 162, 39, 0.04);
+        }
+
+        .writing-option-level {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .writing-option p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .writing-textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 1.25rem;
+            border: 1px solid var(--gray-light);
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--primary);
+            resize: vertical;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .writing-textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .writing-textarea::placeholder {
+            color: #b0b8c4;
+        }
+
+        .word-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .word-count.in-range {
+            color: var(--success);
+        }
+
+        .word-count.over {
+            color: var(--error);
+        }
+
+        /* Navigation Buttons */
+        .test-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .btn-next, .btn-prev, .btn-submit {
+            padding: 0.875rem 2rem;
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-next {
+            background: var(--accent);
+            color: var(--primary);
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-prev {
+            background: transparent;
+            color: var(--gray);
+            border: 1px solid var(--gray-light);
+        }
+
+        .btn-prev:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        /* Results */
+        .results-section {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-card {
+            background: var(--light);
+            padding: 3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .results-level {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .results-card h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .results-description {
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .results-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .results-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+        }
+
+        .results-stat-number {
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .results-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .results-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: 1px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 2rem;
+            background: #060d17;
+            width: 100%;
+        }
+
+        .footer-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        .footer-column h4 {
+            color: var(--white);
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+            word-break: break-word;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                padding: 7rem 5% 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .progress-container {
+                top: 60px;
+            }
+
+            .progress-labels {
+                display: none;
+            }
+
+            .test-container {
+                padding: 2rem 5% 4rem;
+            }
+
+            .writing-options {
+                grid-template-columns: 1fr;
+            }
+
+            .test-nav {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .btn-next, .btn-submit {
+                width: 100%;
+                justify-content: center;
+                order: -1;
+            }
+
+            .btn-prev {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .results-actions {
+                flex-direction: column;
+            }
+
+            .results-actions a {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 6rem 4% 2.5rem;
+            }
+
+            .test-container {
+                padding: 1.5rem 4% 3rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .option {
+                padding: 0.75rem 1rem;
+            }
+
+            .results-card {
+                padding: 2rem 1.5rem;
+            }
+
+            footer {
+                padding: 3rem 4% 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo"><span>NQN</span> English</a>
+        <ul class="nav-links">
+            <li><a href="/empresas">Empresas</a></li>
+            <li><a href="/kids">Kids & Teens</a></li>
+            <li><a href="/travel">Travel</a></li>
+            <li><a href="/#nosotros">Nosotros</a></li>
+        </ul>
+        <a href="/#contacto" class="nav-cta">Contacto</a>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="/empresas" class="mobile-link">Empresas</a></li>
+            <li><a href="/kids" class="mobile-link">Kids & Teens</a></li>
+            <li><a href="/travel" class="mobile-link">Travel</a></li>
+            <li><a href="/#nosotros" class="mobile-link">Nosotros</a></li>
+            <li><a href="/#contacto" class="mobile-link">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Placement Test</span>
+            <h1>Test de <em>Nivelacion</em></h1>
+            <p>Responde las siguientes preguntas para que podamos ubicarte en el nivel adecuado. No es un examen: no hay nota, solo queremos conocer tu punto de partida.</p>
+        </div>
+    </section>
+
+    <!-- Progress Bar -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-labels">
+            <span class="progress-label active" data-section="0">Basic</span>
+            <span class="progress-label" data-section="1">Beginner</span>
+            <span class="progress-label" data-section="2">Elementary</span>
+            <span class="progress-label" data-section="3">Pre-Int</span>
+            <span class="progress-label" data-section="4">Reading</span>
+            <span class="progress-label" data-section="5">Writing</span>
+        </div>
+    </div>
+
+    <!-- Test Content -->
+    <div class="test-container" id="testContainer">
+
+        <!-- SECTION 1 - BASIC -->
+        <div class="test-section active" data-section="0">
+            <span class="section-tag basic">Section 1 &mdash; Basic</span>
+            <h2>Starter / Beginner</h2>
+            <p class="section-objective">Present simple + basic sentence structure</p>
+
+            <div class="question" data-question="1">
+                <div class="question-number">Question 1</div>
+                <div class="question-text">My name ___ Laura.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q1" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">am</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">is</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">are</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="2">
+                <div class="question-number">Question 2</div>
+                <div class="question-text">I ___ in Neuquen.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q2" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">live</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">lives</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">living</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="3">
+                <div class="question-number">Question 3</div>
+                <div class="question-text">We ___ English twice a week.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q3" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">study</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">studies</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">studying</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="4">
+                <div class="question-number">Question 4</div>
+                <div class="question-text">She ___ coffee in the morning.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q4" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">drink</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">drinks</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">drinking</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="test-nav">
+                <button class="btn-next" onclick="nextSection()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 2 - BEGINNER → ELEMENTARY -->
+        <div class="test-section" data-section="1">
+            <span class="section-tag beginner">Section 2 &mdash; Beginner &rarr; Elementary</span>
+            <h2>Present + Past Simple</h2>
+            <p class="section-objective">Past simple + basic usage patterns</p>
+
+            <div class="question" data-question="5">
+                <div class="question-number">Question 5</div>
+                <div class="question-text">I didn't ___ English at school.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q5" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">study</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">studied</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">studying</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="6">
+                <div class="question-number">Question 6</div>
+                <div class="question-text">There isn't ___ milk left.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q6" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">many</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">much</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">few</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="7">
+                <div class="question-number">Question 7</div>
+                <div class="question-text">We ___ the course last year.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">start</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">started</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">starting</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="8">
+                <div class="question-number">Question 8</div>
+                <div class="question-text">She can ___ very well.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q8" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">to speak</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">speaking</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">speak</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="test-nav">
+                <button class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button class="btn-next" onclick="nextSection()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 3 - ELEMENTARY → PRE-INTERMEDIATE -->
+        <div class="test-section" data-section="2">
+            <span class="section-tag elementary">Section 3 &mdash; Elementary &rarr; Pre-Intermediate</span>
+            <h2>Verb Tenses &amp; Comparatives</h2>
+            <p class="section-objective">Verb tenses + comparatives + experience</p>
+
+            <div class="question" data-question="9">
+                <div class="question-number">Question 9</div>
+                <div class="question-text">I've worked here ___ five years.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q9" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">since</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">for</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">during</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="10">
+                <div class="question-number">Question 10</div>
+                <div class="question-text">This exercise is ___ than the last one.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q10" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">more easy</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">easier</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">most easy</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="11">
+                <div class="question-number">Question 11</div>
+                <div class="question-text">When I was a child, we ___ to the beach every summer.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q11" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">go</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q11" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">went</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q11" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">have gone</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="12">
+                <div class="question-number">Question 12</div>
+                <div class="question-text">I'm not as ___ as my sister.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q12" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">tall</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q12" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">taller</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q12" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">tallest</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="test-nav">
+                <button class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button class="btn-next" onclick="nextSection()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 4 - PRE-INTERMEDIATE → INTERMEDIATE -->
+        <div class="test-section" data-section="3">
+            <span class="section-tag preint">Section 4 &mdash; Pre-Intermediate &rarr; Intermediate</span>
+            <h2>Conditionals &amp; Complex Structures</h2>
+            <p class="section-objective">Conditional, superlatives, complex structures</p>
+
+            <div class="question" data-question="13">
+                <div class="question-number">Question 13</div>
+                <div class="question-text">If I ___ more time, I would study English more.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q13" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">have</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q13" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">had</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q13" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">will have</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="14">
+                <div class="question-number">Question 14</div>
+                <div class="question-text">This is the ___ movie I've ever seen.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q14" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">more interesting</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q14" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">most interesting</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q14" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">very interesting</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="15">
+                <div class="question-number">Question 15</div>
+                <div class="question-text">She asked me where I ___ from.</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q15" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">am</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q15" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">was</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q15" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">were</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="test-nav">
+                <button class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button class="btn-next" onclick="nextSection()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 5 - READING -->
+        <div class="test-section" data-section="4">
+            <span class="section-tag reading">Section 5 &mdash; Reading</span>
+            <h2>Reading Comprehension</h2>
+            <p class="section-objective">Read the following message and answer the questions</p>
+
+            <div class="reading-passage">
+                <span class="passage-label">Read the following:</span>
+                <p>Hello,<br><br>
+                This is a reminder that your English classes will start on March 10th at 7:30 pm.<br>
+                Please arrive 10 minutes early on the first day.<br><br>
+                NQN English Institute</p>
+            </div>
+
+            <div class="question" data-question="16">
+                <div class="question-number">Question 16</div>
+                <div class="question-text">When do the classes start?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q16" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">Today</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q16" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">March 10th</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q16" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">Next week</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" data-question="17">
+                <div class="question-number">Question 17</div>
+                <div class="question-text">What time do students need to arrive?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q17" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">7:30</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q17" value="1">
+                        <span class="option-radio"></span>
+                        <span class="option-text">7:20</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q17" value="0">
+                        <span class="option-radio"></span>
+                        <span class="option-text">7:00</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="test-nav">
+                <button class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button class="btn-next" onclick="nextSection()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 6 - WRITING -->
+        <div class="test-section" data-section="5">
+            <span class="section-tag writing">Section 6 &mdash; Writing</span>
+            <h2>Writing</h2>
+            <p class="section-objective">Write 40-60 words. Choose one of the following options:</p>
+
+            <div class="writing-options">
+                <div class="writing-option" id="writingOptA" onclick="selectWritingOption('A')">
+                    <div class="writing-option-level">Option A &mdash; Elementary</div>
+                    <p>Introduce yourself. Say what you do and why you want to study English.</p>
+                </div>
+                <div class="writing-option" id="writingOptB" onclick="selectWritingOption('B')">
+                    <div class="writing-option-level">Option B &mdash; Pre-Int / Intermediate</div>
+                    <p>Describe your experience learning English and how you use English today.</p>
+                </div>
+            </div>
+
+            <textarea class="writing-textarea" id="writingArea" placeholder="Write your answer here..." oninput="updateWordCount()"></textarea>
+            <div class="word-count" id="wordCount">0 / 40-60 words</div>
+
+            <div class="test-nav">
+                <button class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button class="btn-submit" onclick="submitTest()">
+                    Ver mi resultado
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="results-section" id="resultsSection">
+            <div class="results-card">
+                <div class="results-level">Tu nivel sugerido</div>
+                <h2 id="resultLevel"></h2>
+                <p class="results-description" id="resultDescription"></p>
+                <div class="results-breakdown">
+                    <div class="results-stat">
+                        <div class="results-stat-number" id="resultCorrect">0</div>
+                        <div class="results-stat-label">Correctas</div>
+                    </div>
+                    <div class="results-stat">
+                        <div class="results-stat-number" id="resultTotal">17</div>
+                        <div class="results-stat-label">Preguntas</div>
+                    </div>
+                    <div class="results-stat">
+                        <div class="results-stat-number" id="resultReading">0/2</div>
+                        <div class="results-stat-label">Reading</div>
+                    </div>
+                </div>
+            </div>
+            <p class="results-note">Este resultado es orientativo. El nivel final se confirma durante tu primera clase con nosotros.</p>
+            <div class="results-actions">
+                <a href="/#contacto" class="btn-primary">
+                    Contactanos
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="/" class="btn-secondary">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="/" class="logo"><span>NQN</span> English</a>
+                <p>Instituto de ingles con mas de 15 anos de experiencia formando profesionales, ninos y viajeros.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Programas</h4>
+                <ul>
+                    <li><a href="/empresas">Empresas</a></li>
+                    <li><a href="/kids">Kids & Teens</a></li>
+                    <li><a href="/travel">Travel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Instituto</h4>
+                <ul>
+                    <li><a href="/#nosotros">Nosotros</a></li>
+                    <li><a href="/#contacto">Contacto</a></li>
+                    <li><a href="/test">Test de Nivel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:info@nqnenglish.com.ar">info@nqnenglish.com.ar</a></li>
+                    <li><a href="tel:+5491112345678">+54 11 1234-5678</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2024 NQN English Institute. Todos los derechos reservados.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="LinkedIn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // State
+        let currentSection = 0;
+        const totalSections = 6;
+
+        // Correct answers per section (questions grouped by section)
+        // Section 1: q1-q4, Section 2: q5-q8, Section 3: q9-q12, Section 4: q13-q15, Section 5: q16-q17
+        const sectionQuestions = {
+            0: [1, 2, 3, 4],
+            1: [5, 6, 7, 8],
+            2: [9, 10, 11, 12],
+            3: [13, 14, 15],
+            4: [16, 17]
+        };
+
+        // Option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const name = this.querySelector('input').name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                    input.closest('.option').classList.remove('selected');
+                });
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+
+        // Navigation
+        function nextSection() {
+            if (currentSection < totalSections - 1) {
+                showSection(currentSection + 1);
+            }
+        }
+
+        function prevSection() {
+            if (currentSection > 0) {
+                showSection(currentSection - 1);
+            }
+        }
+
+        function showSection(index) {
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            const target = document.querySelector(`.test-section[data-section="${index}"]`);
+            if (target) target.classList.add('active');
+            currentSection = index;
+            updateProgress();
+            window.scrollTo({ top: document.querySelector('.progress-container').offsetTop - 80, behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const pct = ((currentSection + 1) / totalSections) * 100;
+            document.getElementById('progressBar').style.width = pct + '%';
+
+            document.querySelectorAll('.progress-label').forEach(label => {
+                const s = parseInt(label.dataset.section);
+                label.classList.remove('active', 'completed');
+                if (s < currentSection) label.classList.add('completed');
+                if (s === currentSection) label.classList.add('active');
+            });
+        }
+
+        // Writing
+        let selectedWritingOption = null;
+
+        function selectWritingOption(opt) {
+            selectedWritingOption = opt;
+            document.getElementById('writingOptA').classList.toggle('selected', opt === 'A');
+            document.getElementById('writingOptB').classList.toggle('selected', opt === 'B');
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('writingArea').value.trim();
+            const count = text ? text.split(/\s+/).length : 0;
+            const el = document.getElementById('wordCount');
+            el.textContent = count + ' / 40-60 words';
+            el.className = 'word-count';
+            if (count >= 40 && count <= 60) el.classList.add('in-range');
+            else if (count > 60) el.classList.add('over');
+        }
+
+        // Scoring
+        function getScore(sectionIndex) {
+            const questions = sectionQuestions[sectionIndex];
+            if (!questions) return 0;
+            let correct = 0;
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q}"]:checked`);
+                if (selected && selected.value === '1') correct++;
+            });
+            return correct;
+        }
+
+        function submitTest() {
+            const s1 = getScore(0); // out of 4
+            const s2 = getScore(1); // out of 4
+            const s3 = getScore(2); // out of 4
+            const s4 = getScore(3); // out of 3
+            const s5 = getScore(4); // out of 2
+
+            const totalCorrect = s1 + s2 + s3 + s4 + s5;
+            const writingText = document.getElementById('writingArea').value.trim();
+            const writingWords = writingText ? writingText.split(/\s+/).length : 0;
+
+            // Determine level based on decision table
+            let level, description;
+
+            if (s1 <= 2) {
+                level = 'Starter';
+                description = 'Estas en una etapa inicial. Nuestro programa Starter te va a dar las bases solidas para arrancar con confianza.';
+            } else if (s1 >= 3 && s2 <= 2) {
+                level = 'Beginner';
+                description = 'Tenes una base en presente simple. Nuestro nivel Beginner te va a ayudar a consolidar y avanzar con el pasado y estructuras nuevas.';
+            } else if (s2 >= 3 && s3 <= 2) {
+                level = 'Elementary';
+                description = 'Manejas presente y pasado simple. En el nivel Elementary vas a incorporar tiempos verbales mas complejos, comparativos y mas vocabulario.';
+            } else if (s3 >= 3 && s4 <= 1) {
+                level = 'Pre-Intermediate';
+                description = 'Tenes buen manejo de tiempos verbales y comparativos. En Pre-Intermediate vas a trabajar condicionales, estructuras complejas y fluidez.';
+            } else if (s4 >= 2 && writingWords >= 20) {
+                level = 'Intermediate';
+                description = 'Demostraste un manejo solido de la gramatica y las estructuras complejas. El nivel Intermediate te va a llevar al siguiente paso en fluidez y produccion.';
+            } else if (s4 >= 2) {
+                level = 'Pre-Intermediate';
+                description = 'Tenes buen manejo de gramatica. Te recomendamos Pre-Intermediate para consolidar tu produccion escrita y oral.';
+            } else {
+                level = 'Elementary';
+                description = 'Tenes conocimientos basicos de ingles. Elementary es el nivel ideal para seguir construyendo sobre lo que ya sabes.';
+            }
+
+            // Show results
+            document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('progressContainer').style.display = 'none';
+
+            document.getElementById('resultLevel').textContent = level;
+            document.getElementById('resultDescription').textContent = description;
+            document.getElementById('resultCorrect').textContent = totalCorrect;
+            document.getElementById('resultReading').textContent = s5 + '/2';
+            document.getElementById('resultsSection').classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    </script>
+</body>
+</html>

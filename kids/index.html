@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NQN English Institute | Kids & Teens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --secondary: #1a2d4a;
+            --accent: #c9a227;
+            --accent-light: #e8d48a;
+            --kids-primary: #6366f1;
+            --kids-secondary: #818cf8;
+            --kids-light: #eef2ff;
+            --light: #f8f9fa;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+            --white: #ffffff;
+            --serif: 'Instrument Serif', Georgia, serif;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--primary);
+            line-height: 1.6;
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--serif);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--kids-primary);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--kids-primary);
+            color: var(--white);
+            padding: 0.75rem 1.75rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+            border-radius: 6px;
+        }
+
+        .nav-cta:hover {
+            background: var(--kids-secondary);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .mobile-menu-links li {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active .mobile-menu-links li {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu.active .mobile-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-menu.active .mobile-menu-links li:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-menu-links a {
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--kids-primary);
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 5rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--kids-light) 0%, var(--white) 50%, #f0f4ff 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 60%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--kids-primary);
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 50px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge::before {
+            content: '✦';
+            font-size: 0.6rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.75rem, 5vw, 4rem);
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--kids-primary);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .btn-primary {
+            background: var(--kids-primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .btn-primary:hover {
+            background: var(--kids-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border: 1px solid var(--gray-light);
+            transition: all 0.3s;
+            border-radius: 6px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--kids-primary);
+            color: var(--kids-primary);
+        }
+
+        .hero-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            max-width: 550px;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-float-card {
+            position: absolute;
+            background: var(--white);
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-float-card.card-1 {
+            top: 10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .hero-float-card.card-2 {
+            bottom: 15%;
+            right: -5%;
+            animation-delay: 1.5s;
+        }
+
+        .hero-float-card span {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-float-card strong {
+            font-size: 1.25rem;
+            color: var(--kids-primary);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Programs Section */
+        .programs {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--kids-primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .program-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .program-card:hover {
+            transform: translateY(-8px);
+            background: var(--white);
+            border-color: var(--kids-light);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .program-age {
+            display: inline-block;
+            background: var(--kids-primary);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .program-card > p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .program-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .program-features li svg {
+            color: var(--kids-primary);
+            flex-shrink: 0;
+        }
+
+        /* Methodology Section */
+        .methodology {
+            padding: 8rem 5%;
+            background: var(--kids-light);
+        }
+
+        .methodology-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .methodology-visual {
+            position: relative;
+        }
+
+        .methodology-image {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .methodology-badge {
+            position: absolute;
+            bottom: -1.5rem;
+            left: 2rem;
+            background: var(--kids-primary);
+            color: var(--white);
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .methodology-badge svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .methodology-content .section-label {
+            text-align: left;
+        }
+
+        .methodology-content h2 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .methodology-content > p {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .methodology-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .methodology-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .methodology-item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--kids-primary);
+            flex-shrink: 0;
+        }
+
+        .methodology-item-text h4 {
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .methodology-item-text p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* Exams Section */
+        .exams {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .exams-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .exams-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .exam-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .exam-logo {
+            height: 50px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: var(--kids-primary);
+            font-style: italic;
+        }
+
+        .exam-card h4 {
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .exam-card p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 8rem 5%;
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(99, 102, 241, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .testimonials .section-header h2 {
+            color: var(--white);
+        }
+
+        .testimonials .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .testimonial-stars {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-card blockquote {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .testimonial-author-info h5 {
+            color: var(--white);
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-author-info span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 8rem 5%;
+            background: var(--kids-light);
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cta p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-info > p {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .contact-item svg {
+            color: var(--kids-primary);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            padding: 1rem;
+            color: var(--primary);
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--kids-primary);
+            background: var(--white);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            background: var(--kids-primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-start;
+            border-radius: 6px;
+        }
+
+        .btn-submit:hover {
+            background: var(--kids-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 2rem;
+            background: var(--primary);
+        }
+
+        .footer-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        .footer-column h4 {
+            color: var(--white);
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--kids-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: var(--kids-primary);
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .methodology-container {
+                grid-template-columns: 1fr;
+            }
+
+            .methodology-visual {
+                order: -1;
+            }
+
+            .exams-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .footer-brand {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .methodology-list {
+                grid-template-columns: 1fr;
+            }
+
+            .exams-grid {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="/" class="logo"><span>NQN</span> English</a>
+        <ul class="nav-links">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="#programas">Programas</a></li>
+            <li><a href="#metodologia">Metodología</a></li>
+            <li><a href="#examenes">Exámenes</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="#contacto" class="nav-cta">Clase de prueba</a>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="/" class="mobile-link">Inicio</a></li>
+            <li><a href="#programas" class="mobile-link">Programas</a></li>
+            <li><a href="#metodologia" class="mobile-link">Metodología</a></li>
+            <li><a href="#examenes" class="mobile-link">Exámenes</a></li>
+            <li><a href="#contacto" class="mobile-link">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Niños & Adolescentes</span>
+            <h1>Donde aprender inglés es <em>una aventura</em></h1>
+            <p>Metodología lúdica y dinámica que se adapta a cada edad. Preparamos a tus hijos para un mundo sin fronteras, con clases que disfrutan de principio a fin.</p>
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn-primary">
+                    Agendar clase de prueba
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#programas" class="btn-secondary">Ver programas</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" alt="Niños aprendiendo inglés" class="hero-image">
+            <div class="hero-float-card card-1">
+                <span>Grupos reducidos</span>
+                <strong>Máx. 8 alumnos</strong>
+            </div>
+            <div class="hero-float-card card-2">
+                <span>Satisfacción</span>
+                <strong>98% padres</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs" id="programas">
+        <div class="section-header">
+            <span class="section-label">Nuestros Programas</span>
+            <h2>Un programa para cada etapa</h2>
+            <p>Cursos diseñados específicamente para las necesidades y capacidades de cada grupo etario.</p>
+        </div>
+        <div class="programs-grid">
+            <div class="program-card">
+                <span class="program-age">4 - 6 años</span>
+                <h3>Little Explorers</h3>
+                <p>Primeros pasos en el idioma a través del juego, canciones y actividades sensoriales.</p>
+                <ul class="program-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Aprendizaje a través del juego
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Canciones y cuentos
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Grupos de 6 alumnos
+                    </li>
+                </ul>
+            </div>
+            <div class="program-card">
+                <span class="program-age">7 - 12 años</span>
+                <h3>Young Learners</h3>
+                <p>Desarrollo integral del idioma con proyectos creativos y preparación para exámenes Cambridge.</p>
+                <ul class="program-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Proyectos interactivos
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Prep. Cambridge YLE
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Plataforma digital
+                    </li>
+                </ul>
+            </div>
+            <div class="program-card">
+                <span class="program-age">13 - 17 años</span>
+                <h3>Teen Academy</h3>
+                <p>Inglés para el mundo real: conversación fluida, exámenes internacionales y preparación universitaria.</p>
+                <ul class="program-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Conversación y debate
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        FCE, CAE, IELTS
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Prep. universitaria
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology" id="metodologia">
+        <div class="methodology-container">
+            <div class="methodology-visual">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80" alt="Metodología de enseñanza" class="methodology-image">
+                <div class="methodology-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    Metodología propia
+                </div>
+            </div>
+            <div class="methodology-content">
+                <span class="section-label">Nuestra Metodología</span>
+                <h2>Aprender haciendo, no memorizando</h2>
+                <p>Creemos que los chicos aprenden mejor cuando se divierten. Por eso, cada clase es una experiencia inmersiva donde el inglés es el medio, no el fin.</p>
+                <div class="methodology-list">
+                    <div class="methodology-item">
+                        <div class="methodology-item-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polygon points="10 8 16 12 10 16 10 8"/>
+                            </svg>
+                        </div>
+                        <div class="methodology-item-text">
+                            <h4>Gamificación</h4>
+                            <p>Puntos, niveles y recompensas</p>
+                        </div>
+                    </div>
+                    <div class="methodology-item">
+                        <div class="methodology-item-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div class="methodology-item-text">
+                            <h4>Grupos reducidos</h4>
+                            <p>Atención personalizada</p>
+                        </div>
+                    </div>
+                    <div class="methodology-item">
+                        <div class="methodology-item-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <div class="methodology-item-text">
+                            <h4>Tecnología</h4>
+                            <p>Apps y plataformas interactivas</p>
+                        </div>
+                    </div>
+                    <div class="methodology-item">
+                        <div class="methodology-item-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <div class="methodology-item-text">
+                            <h4>Seguimiento</h4>
+                            <p>Reportes para padres</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exams Section -->
+    <section class="exams" id="examenes">
+        <div class="exams-container">
+            <div class="section-header">
+                <span class="section-label">Certificaciones</span>
+                <h2>Preparación para exámenes internacionales</h2>
+                <p>Certificá el nivel de inglés de tus hijos con exámenes reconocidos mundialmente.</p>
+            </div>
+            <div class="exams-grid">
+                <div class="exam-card">
+                    <div class="exam-logo">YLE</div>
+                    <h4>Cambridge YLE</h4>
+                    <p>Starters, Movers & Flyers para niños de 7-12 años</p>
+                </div>
+                <div class="exam-card">
+                    <div class="exam-logo">KET</div>
+                    <h4>A2 Key</h4>
+                    <p>Primer certificado oficial para adolescentes</p>
+                </div>
+                <div class="exam-card">
+                    <div class="exam-logo">PET</div>
+                    <h4>B1 Preliminary</h4>
+                    <p>Nivel intermedio reconocido globalmente</p>
+                </div>
+                <div class="exam-card">
+                    <div class="exam-logo">FCE</div>
+                    <h4>B2 First</h4>
+                    <p>Certificación para ingreso universitario</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-header">
+            <span class="section-label">Testimonios</span>
+            <h2>Lo que dicen los padres</h2>
+            <p>Familias que confían en nosotros para la educación de sus hijos.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <blockquote>"Mi hija empezó a los 5 años y hoy con 9 ya rindió su primer examen Cambridge. La metodología es increíble, nunca siente que está 'estudiando'."</blockquote>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="María S." class="testimonial-avatar">
+                    <div class="testimonial-author-info">
+                        <h5>María S.</h5>
+                        <span>Mamá de Sofía, 9 años</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <blockquote>"Buscábamos un instituto serio para preparar a Tomás para el FCE. Aprobó con A y ya está aplicando a universidades en el exterior."</blockquote>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Carlos R." class="testimonial-avatar">
+                    <div class="testimonial-author-info">
+                        <h5>Carlos R.</h5>
+                        <span>Papá de Tomás, 17 años</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <blockquote>"Los reportes mensuales son muy completos. Siempre sé exactamente cómo está progresando mi hijo y qué áreas puede mejorar."</blockquote>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Laura M." class="testimonial-avatar">
+                    <div class="testimonial-author-info">
+                        <h5>Laura M.</h5>
+                        <span>Mamá de Mateo, 11 años</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <h2>¿Querés conocernos?</h2>
+            <p>Agendá una clase de prueba gratuita y descubrí cómo aprenden los chicos en NQN English.</p>
+            <div class="cta-buttons">
+                <a href="#contacto" class="btn-primary">
+                    Agendar clase gratis
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/5491112345678" class="btn-secondary">Escribinos por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Hablemos del futuro de tus hijos</h2>
+                <p>Completá el formulario y nos pondremos en contacto para coordinar una clase de prueba sin compromiso.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        +54 11 1234-5678
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        kids@nqnenglish.com.ar
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Buenos Aires, Argentina
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tu nombre</label>
+                        <input type="text" placeholder="Nombre del padre/madre">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" placeholder="+54 11 ....">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre del alumno/a</label>
+                        <input type="text" placeholder="Nombre del niño/a">
+                    </div>
+                    <div class="form-group">
+                        <label>Edad</label>
+                        <select>
+                            <option value="">Seleccionar edad</option>
+                            <option value="4-6">4 - 6 años</option>
+                            <option value="7-9">7 - 9 años</option>
+                            <option value="10-12">10 - 12 años</option>
+                            <option value="13-15">13 - 15 años</option>
+                            <option value="16-17">16 - 17 años</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mensaje (opcional)</label>
+                    <textarea placeholder="¿Hay algo que nos quieras contar sobre tu hijo/a?"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Solicitar clase de prueba</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="/" class="logo"><span>NQN</span> English</a>
+                <p>Instituto de inglés con más de 15 años de experiencia formando profesionales, niños y viajeros.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Programas</h4>
+                <ul>
+                    <li><a href="/empresas">Empresas</a></li>
+                    <li><a href="/kids">Kids & Teens</a></li>
+                    <li><a href="/travel">Travel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Kids & Teens</h4>
+                <ul>
+                    <li><a href="#programas">Programas</a></li>
+                    <li><a href="#metodologia">Metodología</a></li>
+                    <li><a href="#examenes">Exámenes</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:kids@nqnenglish.com.ar">kids@nqnenglish.com.ar</a></li>
+                    <li><a href="tel:+5491112345678">+54 11 1234-5678</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2024 NQN English Institute. Todos los derechos reservados.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="YouTube">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.program-card, .exam-card, .testimonial-card, .methodology-item').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.1}s`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
