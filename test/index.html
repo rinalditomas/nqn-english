@@ -1100,14 +1100,31 @@
         </div>
     </div>
 
-    <!-- Netlify Form -->
-    <form name="placement-test" id="placementForm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <!-- Hidden form for Netlify detection at build time -->
+    <form name="placement-test" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input name="bot-field">
+        <input name="nombre">
+        <input name="email">
+        <input name="telefono">
+        <input name="nivel">
+        <input name="puntaje">
+        <input name="puntaje_seccion1">
+        <input name="puntaje_seccion2">
+        <input name="puntaje_seccion3">
+        <input name="puntaje_seccion4">
+        <input name="puntaje_reading">
+        <input name="writing_opcion">
+        <input name="writing_texto">
+    </form>
+
+    <!-- Actual form used by JS -->
+    <form name="placement-test" id="placementForm" method="POST">
+        <input type="hidden" name="form-name" value="placement-test">
         <!-- Honeypot for spam -->
         <p style="display:none">
             <label>No llenes esto: <input name="bot-field"></label>
         </p>
         <!-- Hidden fields populated by JS on submit -->
-        <input type="hidden" name="form-name" value="placement-test">
         <input type="hidden" name="nivel" id="hiddenLevel">
         <input type="hidden" name="puntaje" id="hiddenScore">
         <input type="hidden" name="puntaje_seccion1" id="hiddenS1">
