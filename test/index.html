@@ -1804,13 +1804,24 @@
             if (!email || !emailRegex.test(email)) {
                 document.getElementById('contactEmail').style.borderColor = 'var(--error)';
                 if (email && !emailRegex.test(email)) {
-                    document.getElementById('contactEmail').insertAdjacentHTML('afterend',
-                        '<div class="form-error" id="emailError" style="color:var(--error);font-size:0.8rem;margin-top:0.25rem;">Ingresa un email valido (ej: nombre@email.com)</div>');
+                    const existingEmailErr = document.getElementById('emailError');
+                    if (!existingEmailErr) {
+                        document.getElementById('contactEmail').insertAdjacentHTML('afterend',
+                            '<div class="form-error" id="emailError" style="color:var(--error);font-size:0.8rem;margin-top:0.25rem;">Ingresa un email valido (ej: nombre@email.com)</div>');
+                    }
                 }
                 hasError = true;
             }
-            if (!phone) {
+            const phoneDigits = phone.replace(/\D/g, '');
+            if (!phone || phoneDigits.length < 8) {
                 document.getElementById('contactPhone').style.borderColor = 'var(--error)';
+                if (phone && phoneDigits.length < 8) {
+                    const existingPhoneErr = document.getElementById('phoneError');
+                    if (!existingPhoneErr) {
+                        document.getElementById('contactPhone').insertAdjacentHTML('afterend',
+                            '<div class="form-error" id="phoneError" style="color:var(--error);font-size:0.8rem;margin-top:0.25rem;">Ingresa un numero de telefono valido (minimo 8 digitos)</div>');
+                    }
+                }
                 hasError = true;
             }
 
@@ -1834,6 +1845,8 @@
         });
         document.getElementById('contactPhone').addEventListener('input', function() {
             this.style.borderColor = '';
+            const err = document.getElementById('phoneError');
+            if (err) err.remove();
         });
 
         // Navigation
