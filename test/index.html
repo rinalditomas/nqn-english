@@ -1793,13 +1793,28 @@
             const name = document.getElementById('contactName').value.trim();
             const email = document.getElementById('contactEmail').value.trim();
             const phone = document.getElementById('contactPhone').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            if (!name || !email || !phone) {
-                if (!name) document.getElementById('contactName').style.borderColor = 'var(--error)';
-                if (!email) document.getElementById('contactEmail').style.borderColor = 'var(--error)';
-                if (!phone) document.getElementById('contactPhone').style.borderColor = 'var(--error)';
-                return;
+            let hasError = false;
+
+            if (!name) {
+                document.getElementById('contactName').style.borderColor = 'var(--error)';
+                hasError = true;
             }
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('contactEmail').style.borderColor = 'var(--error)';
+                if (email && !emailRegex.test(email)) {
+                    document.getElementById('contactEmail').insertAdjacentHTML('afterend',
+                        '<div class="form-error" id="emailError" style="color:var(--error);font-size:0.8rem;margin-top:0.25rem;">Ingresa un email valido (ej: nombre@email.com)</div>');
+                }
+                hasError = true;
+            }
+            if (!phone) {
+                document.getElementById('contactPhone').style.borderColor = 'var(--error)';
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             document.getElementById('contactName').style.borderColor = '';
             document.getElementById('contactEmail').style.borderColor = '';
@@ -1814,6 +1829,8 @@
         });
         document.getElementById('contactEmail').addEventListener('input', function() {
             this.style.borderColor = '';
+            const err = document.getElementById('emailError');
+            if (err) err.remove();
         });
         document.getElementById('contactPhone').addEventListener('input', function() {
             this.style.borderColor = '';
