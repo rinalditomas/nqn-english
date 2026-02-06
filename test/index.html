@@ -1948,7 +1948,7 @@
             const form = document.getElementById('placementForm');
             const formData = new FormData(form);
 
-            fetch('/', {
+            fetch('/test/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(formData).toString()
