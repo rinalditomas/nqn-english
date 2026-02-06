@@ -1103,18 +1103,14 @@
     <!-- Hidden form for Netlify detection at build time -->
     <form name="placement-test" data-netlify="true" netlify-honeypot="bot-field" hidden>
         <input name="bot-field">
-        <input name="nombre">
-        <input name="email">
-        <input name="telefono">
-        <input name="nivel">
-        <input name="puntaje">
-        <input name="puntaje_seccion1">
-        <input name="puntaje_seccion2">
-        <input name="puntaje_seccion3">
-        <input name="puntaje_seccion4">
-        <input name="puntaje_reading">
-        <input name="writing_opcion">
-        <input name="writing_texto">
+        <input name="Nombre">
+        <input name="Email">
+        <input name="Telefono">
+        <input name="Nivel Sugerido">
+        <input name="Puntaje Total">
+        <input name="Desglose por Seccion">
+        <input name="Writing - Opcion Elegida">
+        <input name="Writing - Texto">
     </form>
 
     <!-- Actual form used by JS -->
@@ -1125,15 +1121,11 @@
             <label>No llenes esto: <input name="bot-field"></label>
         </p>
         <!-- Hidden fields populated by JS on submit -->
-        <input type="hidden" name="nivel" id="hiddenLevel">
-        <input type="hidden" name="puntaje" id="hiddenScore">
-        <input type="hidden" name="puntaje_seccion1" id="hiddenS1">
-        <input type="hidden" name="puntaje_seccion2" id="hiddenS2">
-        <input type="hidden" name="puntaje_seccion3" id="hiddenS3">
-        <input type="hidden" name="puntaje_seccion4" id="hiddenS4">
-        <input type="hidden" name="puntaje_reading" id="hiddenS5">
-        <input type="hidden" name="writing_opcion" id="hiddenWritingOpt">
-        <input type="hidden" name="writing_texto" id="hiddenWritingText">
+        <input type="hidden" name="Nivel Sugerido" id="hiddenLevel">
+        <input type="hidden" name="Puntaje Total" id="hiddenScore">
+        <input type="hidden" name="Desglose por Seccion" id="hiddenBreakdown">
+        <input type="hidden" name="Writing - Opcion Elegida" id="hiddenWritingOpt">
+        <input type="hidden" name="Writing - Texto" id="hiddenWritingText">
 
     <!-- Test Content -->
     <div class="test-container" id="testContainer">
@@ -1150,17 +1142,17 @@
 
             <div class="form-group">
                 <label class="form-label" for="contactName">Nombre completo <span class="required">*</span></label>
-                <input type="text" class="form-input" id="contactName" name="nombre" placeholder="Ej: Laura Martinez" required>
+                <input type="text" class="form-input" id="contactName" name="Nombre" placeholder="Ej: Laura Martinez" required>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="contactEmail">Email <span class="required">*</span></label>
-                <input type="email" class="form-input" id="contactEmail" name="email" placeholder="Ej: laura@email.com" required>
+                <input type="email" class="form-input" id="contactEmail" name="Email" placeholder="Ej: laura@email.com" required>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="contactPhone">Telefono <span class="required">*</span></label>
-                <input type="tel" class="form-input" id="contactPhone" name="telefono" placeholder="Ej: 299 412-3456" required>
+                <input type="tel" class="form-input" id="contactPhone" name="Telefono" placeholder="Ej: 299 412-3456" required>
                 <div class="form-hint">WhatsApp preferentemente</div>
             </div>
 
@@ -1935,13 +1927,14 @@
 
             // Populate hidden fields
             document.getElementById('hiddenLevel').value = level;
-            document.getElementById('hiddenScore').value = totalCorrect + '/17';
-            document.getElementById('hiddenS1').value = s1 + '/4';
-            document.getElementById('hiddenS2').value = s2 + '/4';
-            document.getElementById('hiddenS3').value = s3 + '/4';
-            document.getElementById('hiddenS4').value = s4 + '/3';
-            document.getElementById('hiddenS5').value = s5 + '/2';
-            document.getElementById('hiddenWritingOpt').value = selectedWritingOption || 'No selecciono';
+            document.getElementById('hiddenScore').value = totalCorrect + ' de 17 correctas';
+            document.getElementById('hiddenBreakdown').value =
+                'Basic: ' + s1 + '/4 | ' +
+                'Beginner: ' + s2 + '/4 | ' +
+                'Elementary: ' + s3 + '/4 | ' +
+                'Pre-Int: ' + s4 + '/3 | ' +
+                'Reading: ' + s5 + '/2';
+            document.getElementById('hiddenWritingOpt').value = selectedWritingOption ? 'Option ' + selectedWritingOption : 'No selecciono';
             document.getElementById('hiddenWritingText').value = writingText || '(vacio)';
 
             // Submit via fetch (AJAX) so we stay on the page
