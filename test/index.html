@@ -394,6 +394,7 @@
             margin-bottom: 1rem;
         }
 
+        .section-tag.info { background: #0ea5e9; }
         .section-tag.basic { background: #3b82f6; }
         .section-tag.beginner { background: #6366f1; }
         .section-tag.elementary { background: #8b5cf6; }
@@ -414,6 +415,64 @@
             margin-bottom: 2.5rem;
             padding-bottom: 1.5rem;
             border-bottom: 1px solid var(--gray-light);
+        }
+
+        /* Contact Form Fields */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-label .required {
+            color: var(--error);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--gray-light);
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            color: var(--primary);
+            transition: border-color 0.3s;
+            outline: none;
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+        }
+
+        .form-input::placeholder {
+            color: #b0b8c4;
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.35rem;
+        }
+
+        .contact-intro {
+            background: var(--light);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .contact-intro p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.7;
         }
 
         /* Question */
@@ -634,6 +693,12 @@
             transform: translateY(-1px);
         }
 
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-prev {
             background: transparent;
             color: var(--gray);
@@ -653,6 +718,12 @@
         .btn-submit:hover {
             background: var(--secondary);
             transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* Results */
@@ -728,6 +799,18 @@
             color: var(--gray);
             font-style: italic;
             margin-bottom: 2rem;
+        }
+
+        .results-sent {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
         }
 
         .results-actions {
@@ -1007,20 +1090,73 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
         <div class="progress-labels">
-            <span class="progress-label active" data-section="0">Basic</span>
-            <span class="progress-label" data-section="1">Beginner</span>
-            <span class="progress-label" data-section="2">Elementary</span>
-            <span class="progress-label" data-section="3">Pre-Int</span>
-            <span class="progress-label" data-section="4">Reading</span>
-            <span class="progress-label" data-section="5">Writing</span>
+            <span class="progress-label active" data-section="0">Datos</span>
+            <span class="progress-label" data-section="1">Basic</span>
+            <span class="progress-label" data-section="2">Beginner</span>
+            <span class="progress-label" data-section="3">Elementary</span>
+            <span class="progress-label" data-section="4">Pre-Int</span>
+            <span class="progress-label" data-section="5">Reading</span>
+            <span class="progress-label" data-section="6">Writing</span>
         </div>
     </div>
+
+    <!-- Netlify Form -->
+    <form name="placement-test" id="placementForm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <!-- Honeypot for spam -->
+        <p style="display:none">
+            <label>No llenes esto: <input name="bot-field"></label>
+        </p>
+        <!-- Hidden fields populated by JS on submit -->
+        <input type="hidden" name="form-name" value="placement-test">
+        <input type="hidden" name="nivel" id="hiddenLevel">
+        <input type="hidden" name="puntaje" id="hiddenScore">
+        <input type="hidden" name="puntaje_seccion1" id="hiddenS1">
+        <input type="hidden" name="puntaje_seccion2" id="hiddenS2">
+        <input type="hidden" name="puntaje_seccion3" id="hiddenS3">
+        <input type="hidden" name="puntaje_seccion4" id="hiddenS4">
+        <input type="hidden" name="puntaje_reading" id="hiddenS5">
+        <input type="hidden" name="writing_opcion" id="hiddenWritingOpt">
+        <input type="hidden" name="writing_texto" id="hiddenWritingText">
 
     <!-- Test Content -->
     <div class="test-container" id="testContainer">
 
-        <!-- SECTION 1 - BASIC -->
+        <!-- SECTION 0 - CONTACT INFO -->
         <div class="test-section active" data-section="0">
+            <span class="section-tag info">Tus datos</span>
+            <h2>Antes de empezar</h2>
+            <p class="section-objective">Necesitamos algunos datos para enviarte tu resultado y contactarte.</p>
+
+            <div class="contact-intro">
+                <p>Tu informacion es confidencial. Solo la usaremos para comunicarte tu nivel y ofrecerte el programa adecuado.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="contactName">Nombre completo <span class="required">*</span></label>
+                <input type="text" class="form-input" id="contactName" name="nombre" placeholder="Ej: Laura Martinez" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="contactEmail">Email <span class="required">*</span></label>
+                <input type="email" class="form-input" id="contactEmail" name="email" placeholder="Ej: laura@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="contactPhone">Telefono <span style="color: var(--gray); font-weight: 400; text-transform: none; letter-spacing: 0;">(opcional)</span></label>
+                <input type="tel" class="form-input" id="contactPhone" name="telefono" placeholder="Ej: 299 412-3456">
+                <div class="form-hint">WhatsApp preferentemente</div>
+            </div>
+
+            <div class="test-nav">
+                <button type="button" class="btn-next" onclick="startTest()">
+                    Comenzar test
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 1 - BASIC -->
+        <div class="test-section" data-section="1">
             <span class="section-tag basic">Section 1 &mdash; Basic</span>
             <h2>Starter / Beginner</h2>
             <p class="section-objective">Present simple + basic sentence structure</p>
@@ -1114,15 +1250,19 @@
             </div>
 
             <div class="test-nav">
-                <button class="btn-next" onclick="nextSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Anterior
+                </button>
+                <button type="button" class="btn-next" onclick="nextSection()">
                     Siguiente
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- SECTION 2 - BEGINNER → ELEMENTARY -->
-        <div class="test-section" data-section="1">
+        <!-- SECTION 2 - BEGINNER to ELEMENTARY -->
+        <div class="test-section" data-section="2">
             <span class="section-tag beginner">Section 2 &mdash; Beginner &rarr; Elementary</span>
             <h2>Present + Past Simple</h2>
             <p class="section-objective">Past simple + basic usage patterns</p>
@@ -1216,19 +1356,19 @@
             </div>
 
             <div class="test-nav">
-                <button class="btn-prev" onclick="prevSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Anterior
                 </button>
-                <button class="btn-next" onclick="nextSection()">
+                <button type="button" class="btn-next" onclick="nextSection()">
                     Siguiente
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- SECTION 3 - ELEMENTARY → PRE-INTERMEDIATE -->
-        <div class="test-section" data-section="2">
+        <!-- SECTION 3 - ELEMENTARY to PRE-INTERMEDIATE -->
+        <div class="test-section" data-section="3">
             <span class="section-tag elementary">Section 3 &mdash; Elementary &rarr; Pre-Intermediate</span>
             <h2>Verb Tenses &amp; Comparatives</h2>
             <p class="section-objective">Verb tenses + comparatives + experience</p>
@@ -1322,19 +1462,19 @@
             </div>
 
             <div class="test-nav">
-                <button class="btn-prev" onclick="prevSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Anterior
                 </button>
-                <button class="btn-next" onclick="nextSection()">
+                <button type="button" class="btn-next" onclick="nextSection()">
                     Siguiente
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- SECTION 4 - PRE-INTERMEDIATE → INTERMEDIATE -->
-        <div class="test-section" data-section="3">
+        <!-- SECTION 4 - PRE-INTERMEDIATE to INTERMEDIATE -->
+        <div class="test-section" data-section="4">
             <span class="section-tag preint">Section 4 &mdash; Pre-Intermediate &rarr; Intermediate</span>
             <h2>Conditionals &amp; Complex Structures</h2>
             <p class="section-objective">Conditional, superlatives, complex structures</p>
@@ -1406,11 +1546,11 @@
             </div>
 
             <div class="test-nav">
-                <button class="btn-prev" onclick="prevSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Anterior
                 </button>
-                <button class="btn-next" onclick="nextSection()">
+                <button type="button" class="btn-next" onclick="nextSection()">
                     Siguiente
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
@@ -1418,7 +1558,7 @@
         </div>
 
         <!-- SECTION 5 - READING -->
-        <div class="test-section" data-section="4">
+        <div class="test-section" data-section="5">
             <span class="section-tag reading">Section 5 &mdash; Reading</span>
             <h2>Reading Comprehension</h2>
             <p class="section-objective">Read the following message and answer the questions</p>
@@ -1476,11 +1616,11 @@
             </div>
 
             <div class="test-nav">
-                <button class="btn-prev" onclick="prevSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Anterior
                 </button>
-                <button class="btn-next" onclick="nextSection()">
+                <button type="button" class="btn-next" onclick="nextSection()">
                     Siguiente
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
@@ -1488,7 +1628,7 @@
         </div>
 
         <!-- SECTION 6 - WRITING -->
-        <div class="test-section" data-section="5">
+        <div class="test-section" data-section="6">
             <span class="section-tag writing">Section 6 &mdash; Writing</span>
             <h2>Writing</h2>
             <p class="section-objective">Write 40-60 words. Choose one of the following options:</p>
@@ -1508,11 +1648,11 @@
             <div class="word-count" id="wordCount">0 / 40-60 words</div>
 
             <div class="test-nav">
-                <button class="btn-prev" onclick="prevSection()">
+                <button type="button" class="btn-prev" onclick="prevSection()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                     Anterior
                 </button>
-                <button class="btn-submit" onclick="submitTest()">
+                <button type="button" class="btn-submit" id="submitBtn" onclick="submitTest()">
                     Ver mi resultado
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
@@ -1540,6 +1680,10 @@
                     </div>
                 </div>
             </div>
+            <div class="results-sent" id="resultsSent">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Tus resultados fueron enviados. Te contactaremos pronto.
+            </div>
             <p class="results-note">Este resultado es orientativo. El nivel final se confirma durante tu primera clase con nosotros.</p>
             <div class="results-actions">
                 <a href="/#contacto" class="btn-primary">
@@ -1550,6 +1694,7 @@
             </div>
         </div>
     </div>
+    </form>
 
     <!-- Footer -->
     <footer>
@@ -1611,16 +1756,15 @@
     <script>
         // State
         let currentSection = 0;
-        const totalSections = 6;
+        const totalSections = 7; // 0=contact, 1-4=grammar, 5=reading, 6=writing
 
-        // Correct answers per section (questions grouped by section)
-        // Section 1: q1-q4, Section 2: q5-q8, Section 3: q9-q12, Section 4: q13-q15, Section 5: q16-q17
+        // Section questions mapping (section index -> question numbers)
         const sectionQuestions = {
-            0: [1, 2, 3, 4],
-            1: [5, 6, 7, 8],
-            2: [9, 10, 11, 12],
-            3: [13, 14, 15],
-            4: [16, 17]
+            1: [1, 2, 3, 4],
+            2: [5, 6, 7, 8],
+            3: [9, 10, 11, 12],
+            4: [13, 14, 15],
+            5: [16, 17]
         };
 
         // Option selection
@@ -1633,6 +1777,33 @@
                 this.classList.add('selected');
                 this.querySelector('input').checked = true;
             });
+        });
+
+        // Validate contact form before starting test
+        function startTest() {
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+
+            if (!name || !email) {
+                // Highlight empty required fields
+                if (!name) document.getElementById('contactName').style.borderColor = 'var(--error)';
+                if (!email) document.getElementById('contactEmail').style.borderColor = 'var(--error)';
+                return;
+            }
+
+            // Reset border colors
+            document.getElementById('contactName').style.borderColor = '';
+            document.getElementById('contactEmail').style.borderColor = '';
+
+            nextSection();
+        }
+
+        // Reset field border on input
+        document.getElementById('contactName').addEventListener('input', function() {
+            this.style.borderColor = '';
+        });
+        document.getElementById('contactEmail').addEventListener('input', function() {
+            this.style.borderColor = '';
         });
 
         // Navigation
@@ -1701,11 +1872,15 @@
         }
 
         function submitTest() {
-            const s1 = getScore(0); // out of 4
-            const s2 = getScore(1); // out of 4
-            const s3 = getScore(2); // out of 4
-            const s4 = getScore(3); // out of 3
-            const s5 = getScore(4); // out of 2
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = 'Enviando...';
+
+            const s1 = getScore(1); // Basic: out of 4
+            const s2 = getScore(2); // Beginner: out of 4
+            const s3 = getScore(3); // Elementary: out of 4
+            const s4 = getScore(4); // Pre-Int: out of 3
+            const s5 = getScore(5); // Reading: out of 2
 
             const totalCorrect = s1 + s2 + s3 + s4 + s5;
             const writingText = document.getElementById('writingArea').value.trim();
@@ -1737,14 +1912,50 @@
                 description = 'Tenes conocimientos basicos de ingles. Elementary es el nivel ideal para seguir construyendo sobre lo que ya sabes.';
             }
 
-            // Show results
+            // Populate hidden fields
+            document.getElementById('hiddenLevel').value = level;
+            document.getElementById('hiddenScore').value = totalCorrect + '/17';
+            document.getElementById('hiddenS1').value = s1 + '/4';
+            document.getElementById('hiddenS2').value = s2 + '/4';
+            document.getElementById('hiddenS3').value = s3 + '/4';
+            document.getElementById('hiddenS4').value = s4 + '/3';
+            document.getElementById('hiddenS5').value = s5 + '/2';
+            document.getElementById('hiddenWritingOpt').value = selectedWritingOption || 'No selecciono';
+            document.getElementById('hiddenWritingText').value = writingText || '(vacio)';
+
+            // Submit via fetch (AJAX) so we stay on the page
+            const form = document.getElementById('placementForm');
+            const formData = new FormData(form);
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('resultsSent').style.display = 'inline-flex';
+                } else {
+                    document.getElementById('resultsSent').style.display = 'none';
+                }
+            })
+            .catch(() => {
+                document.getElementById('resultsSent').style.display = 'none';
+            })
+            .finally(() => {
+                // Show results regardless
+                showResults(level, description, totalCorrect, s5);
+            });
+        }
+
+        function showResults(level, description, totalCorrect, readingScore) {
             document.querySelectorAll('.test-section').forEach(s => s.classList.remove('active'));
             document.getElementById('progressContainer').style.display = 'none';
 
             document.getElementById('resultLevel').textContent = level;
             document.getElementById('resultDescription').textContent = description;
             document.getElementById('resultCorrect').textContent = totalCorrect;
-            document.getElementById('resultReading').textContent = s5 + '/2';
+            document.getElementById('resultReading').textContent = readingScore + '/2';
             document.getElementById('resultsSection').classList.add('active');
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
